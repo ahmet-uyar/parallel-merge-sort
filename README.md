@@ -60,8 +60,23 @@ Merging starts{
 ### Utilization of Cores
 Double merging algorithm improves the merging speed two times. With the previous algorithm, at the first iterations of merge operations, only half of the cores are used to perform merging. The other half of the cores sit idle. With double merging algorithm, all cores in the system is used to perform merging in first iteration of merging. Similarly in other iterations, double merging utilizes two times more cores in the system. 
 
-### Implementation of Double Merge Algorithm
+### Implementation of Iterative Merge Sort With Double Merging
 I have implemented the double merge algorithm using iterative parallel merge sort. It has two versions. 
 1. MergeSortWithBarriersDTM1.java: It performs iterative merge sort on a long array. It requires the number of threads to be a power of two. It also requires that the number of elements to be sorted is divisible by the number of threads. 
 1. MergeSortWithBarriersDTM2.java: This file performs iterative merge sort on a long array. It removes those two restrictions on the input. The number of threads can be an number and the number of elements can any length.
 
+## Performance Comparions
+I compared the performance of double thread merging algorithm with the single theard merging algorithm in Java library. I also compared them with sequential sorting times from Arrays.sort method in Java library. Performance comparison class is PerformanceTest.java. 
+* I tested the sorting times with 5 different array sizes: 10M, 20M, 30M, 40M, 50M. 
+* I run each sorting 7 times and average the running times. This helps soothing out the interferences from other running processes on the computer. 
+* Below figure shows the results. Compared to the Java Library parallel sort method, double merging algorithm provides 15-20% performance gains on a quadcore machine. 
+
+![Performance Comparison](/docs/perf-compare.png)
+
+## Conclusion
+In summary, parallel merge sort with double merging algorithm provides a nice performance gain compared to the parallel merge sort implemented in Java Library. 
+I hope these programs may be helpful for those people who would like to learn parallel programming with barriers or fork-join framework. Parallel merge sort is a good example problem to study when learnin parallel programming. 
+
+## Further Study
+It would be interesting to see the performance gains in systems with higher number of cores. 
+Implementation of double merging with fork-join can be done. In that case, two children threads need to synchronize with each other when performing merging. That is kind of problematic with ForkJoin framework. 
