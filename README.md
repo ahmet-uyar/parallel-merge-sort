@@ -74,9 +74,9 @@ I compared the performance of double thread merging algorithm with the single th
 ![Performance Comparison](/docs/perf-compare.png)
 
 ## Conclusion
-In summary, parallel merge sort with double merging algorithm provides a nice performance gain compared to the parallel merge sort implemented in Java Library. 
-I hope these programs may be helpful for those people who would like to learn parallel programming with barriers or fork-join framework. Parallel merge sort is a good example problem to study when learnin parallel programming. 
+* In summary, parallel merge sort with double merging algorithm provides a nice performance gain compared to the parallel merge sort algorithm implemented in Java Library. 
+* I hope these programs may be helpful for those people who would like to learn parallel programming with barriers or fork-join framework. Parallel merge sort is a good example problem to study when learnin parallel programming. 
 
 ## Further Study
-It would be interesting to see the performance gains in systems with higher number of cores. 
-Implementation of double merging with fork-join can be done. In that case, two children threads need to synchronize with each other when performing merging. That is kind of problematic with ForkJoin framework. 
+* It would be interesting to see the performance gains in systems with higher number of cores. 
+* Implementation of double merging with fork-join can be done. In that case, two children threads need to synchronize with each other when performing simultaneous merging. That is kind of problematic with ForkJoin framework however. 
