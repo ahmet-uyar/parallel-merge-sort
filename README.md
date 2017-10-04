@@ -13,8 +13,8 @@ Parallel merge sort algorithm can be implemented both recursively and iterativel
 * [CyclicBarrier](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CyclicBarrier.html): Synchrpnize a group of threads at barrier points possibly multiple times during a program. 
 * [ForkJoin Framework](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinTask.html): One thread forks other threads and waits for their completion. Forked thrads can also fork new threads and recursively creates a thread tree. 
 
-##Iterative Parallel Merge Sort
+## Iterative Parallel Merge Sort
 Iterative parallel merge sort algorithm works as explained above. A CyclicBarrier synchronizes all threads when moving to next iteration. First all threads sequentially sort their sub arrays, then they all wait for others to complete. When they completed sorting their sub arrays, they move to the next iteration. The CyclicBarrier makes sure that all threads wait each other between the iterations. 
 
-##Recursive Parallel Merge Sort
+## Recursive Parallel Merge Sort
 Recursive parallel merge sort is implemented by using Fork Join framework in Java. A root thread divides the elements into two and fork two threads to sort each of them. Then, recursively each thread divides its elements into two and forks two new threads to sort them. This thread construction continues until a threshold is hit. Usually when the number of threads in the leaf of the tread recursion three is equal to the number of cores in the system, recursion stops. Each thread in the leaf of recursion tree sorts its sub array. When they are done, non-leaf threads perform merging operation. In the last step, the root thread merges the last two sub sorted elements and produces a sorted element list.  
