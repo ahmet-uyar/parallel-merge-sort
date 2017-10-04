@@ -35,3 +35,33 @@ Similar to iterative implementations, I have two versions of recursive parallel 
 ## Parallel Sort Implementation in Java Library
 Java Arrays class in java.util package has a [parallelSort](https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html#parallelSort-long:A-) method to perform parallel sort on multi-core machines. It implements a recursive parallel merge sort by using ForkJoin framework. It is very similar to MergeSortWithForkJoinSTM2.java. 
 
+## Parallel Merge Sort With Double Merging
+The main insight of this algorithm is that each merging operation can be performed by two threads simultanenously. One thread can get minimums of two sorted sub arrays repeatedly. Until it merges half of the elements. The other thread can get maximums of two sorted sub arrays repeatedly. Until it merges the other half of the elements. Double merging is explained in the below figure. The details are explained in the [paper](http://ieeexplore.ieee.org/document/7036012/). 
+
+![Double Merging Algorithm](/docs/double-merge-2.png)
+
+### Synchronization of Double Merging Threads
+When two threads are performing simultanenous merging, they need to wait each other at two points. The algorithm is shown below: 
+```
+Merging starts{
+   Merge: 
+      Thread 1: merge mins
+      Thread 2: merge maxes
+   Synchronize: 
+      Two threads wait each other
+   Copy back:
+      Thread 1: copy back first half
+      Thread 2: copy back second half
+   Synchronize: 
+      Two threads wait each other
+} Merging ends
+```
+
+### Utilization of Cores
+Double merging algorithm improves the merging speed two times. With the previous algorithm, at the first iterations of merge operations, only half of the cores are used to perform merging. The other half of the cores sit idle. With double merging algorithm, all cores in the system is used to perform merging in first iteration of merging. Similarly in other iterations, double merging utilizes two times more cores in the system. 
+
+### Implementation of Double Merge Algorithm
+I have implemented the double merge algorithm using iterative parallel merge sort. It has two versions. 
+1. MergeSortWithBarriersDTM1.java: It performs iterative merge sort on a long array. It requires the number of threads to be a power of two. It also requires that the number of elements to be sorted is divisible by the number of threads. 
+1. MergeSortWithBarriersDTM2.java: This file performs iterative merge sort on a long array. It removes those two restrictions on the input. The number of threads can be an number and the number of elements can any length.
+
