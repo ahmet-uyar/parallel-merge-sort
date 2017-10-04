@@ -17,6 +17,21 @@ Parallel merge sort algorithm can be implemented both recursively and iterativel
 Iterative parallel merge sort algorithm works as explained above. A CyclicBarrier synchronizes all threads when moving to next iteration. First all threads sequentially sort their sub arrays, then they all wait for others to complete. When they completed sorting their sub arrays, they move to the next iteration. The CyclicBarrier makes sure that all threads wait each other between the iterations. 
 
 ## Recursive Parallel Merge Sort
-Recursive parallel merge sort is implemented by using Fork Join framework in Java. A root thread divides the elements into two and forks two new threads to sort each of them. Then, recursively each thread divides its elements into two and forks two new threads to sort them. This thread construction continues until a threshold is hit. Usually when the number of threads in the leaf of the thread recursion three is equal to the number of cores in the system, recursion stops. Each thread in the leaf of recursion tree sorts its sub array. When they are done, non-leaf threads perform merging operation. In the last step, the root thread merges the last two sub sorted elements and produces a sorted element list.  
+Recursive parallel merge sort is implemented by using Fork Join framework in Java. A root thread divides the elements into two and forks two new threads to sort each of them. Then, recursively each thread divides its elements into two and forks two new threads to sort them. This thread construction continues until a threshold is hit. Usually when the number of threads in the leaf of the thread recursion three is equal to the number of cores in the system, recursion stops. Each thread in the leaf of recursion tree sorts its sub array. When they are done, non-leaf threads perform merging operation. In the last step, the root thread merges the last two sub sorted elements and produces a sorted element list. This algorithm is explained in below figure. 
 
 ![Recursive Parallel Merge Sort Algorithm](/docs/recursive-pms-3.png)
+
+## Implementation of Iterative Parallel Merge Sort
+I have implemented iterative parallel merge sort using a CyclicBarrier as explained above. I sort a long array to make it easy to understand. 
+I have several implementation files. They are from simple to more complex. 
+1. MergeSortWithBarriersSTM1.java: This file sorts a long array. It requires the number of threads to be a power of two. It also retquires that the number of elements to be sorted is divisible by the number of threads, so that each sub array is the same size. These two conditions make programming a little easier. This file performs single thread merging, not double thread merging. 
+1. MergeSortWithBarriersSTM2.java: This is a more general version of MergeSortWithBarriersSTM1.java. It removes those two restrictions on the input. The number of threads can be an number and the number of elements can any length. This file also performs single thread merging, not double thread merging. 
+
+## Implementation of Recursive Parallel Merge Sort
+Similar to iterative implementations, I have two versions of recursive parallel merge sort algorithm. This one uses RecursiveAction class from ForkJoin framework. The algorithm is similar to the one shown above the figure. There is no double merging in these files either. 
+1. MergeSortWithForkJoinSTM1.java: This file performs recursive merge sort on a long array. It requires the number of threads to be a power of two. It also retquires that the number of elements to be sorted is divisible by the number of threads. 
+1. MergeSortWithForkJoinSTM2.java: This file performs recursive merge sort on a long array. It removes those two restrictions on the input. The number of threads can be an number and the number of elements can any length.
+
+## Parallel Sort Implementation in Java Library
+Java Arrays class in java.util package has a [parallelSort](https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html#parallelSort-long:A-) method to perform parallel sort on multi-core machines. It implements a recursive parallel merge sort by using ForkJoin framework. It is very similar to MergeSortWithForkJoinSTM2.java. 
+
