@@ -1,0 +1,10 @@
+Each sorting has been performed 7 times on the same array size. 
+Average running times are calculated. 
+The number of cores in the computer is 4. 
+
+Array Sizes 	Seq Sort 	Parallel Sort 	Double Merge Sort
+10000000		861.0		350.0			299.0
+20000000		1776.0		741.0			611.0
+30000000		2745.0		1078.0			906.0
+40000000		3728.0		1527.0			1196.0
+50000000		4725.0		1850.0			1533.0
