@@ -89,5 +89,5 @@ I compared the performance of double thread merging algorithm with the single th
 
 ## Further Study
 * It would be interesting to see the performance gains in systems with higher number of cores. 
-* It would be interesting to see the performance comparisons of parallel sort in Java library and MergeSortWithForkJoinSTM2 in a system with 6, 12, or 24 cores. 
+* It would be interesting to see the performance comparisons of parallel sort in Java library and MergeSortWithForkJoinSTM2 in a system with 6, 12, or 24 cores. How much difference does it make constructing a complete binary thread tree or a full binary thread tree?
 * Implementation of double merging with fork-join can be done. In that case, two children threads need to synchronize with each other when performing simultaneous merging. That is kind of problematic with ForkJoin framework however. 
