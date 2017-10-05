@@ -1,7 +1,12 @@
 # Parallel Merge Sort With Double Merging
 
-Sorting is one of the most important problems in computer science. There are many sequential sorting algorithms. However, many of those sequential sorting algorithms are not suitable to parallelize. 
+Sorting is one of the most important problems in computer science. There are many sequential sorting algorithms. However, many of those sequential sorting algorithms are not suitable for parallelization. 
 
+In this project, I implemented two types of parallel merge sort algorithm: iterative and recursive. I compare my algorithm with the parallel merge sort algorithm in Java library. My implementations have two advantages compared to the parallel merge sort in Java library: 
+* My iterative parallel merge sort algorithm performs simultanenous double merging. It utilizes multi-core CPUs better and yields greater performance. Performance comparison figures are given below. 
+* My recursive parallel merge sort algorithm divides the work among the cores better by constructing better recursive binary thread trees.  
+
+## Parallel Merge Sort Algorithm
 Merge sort is one of the sorting algorithms that is suitable for parallelization. Here is the steps of a general parallel merge sort algorithm: 
 1. divide the elements to be sorted into the number of cores in the system
 1. each core sorts its assigned sub array independently. (they may use any of the sequential sorting algorithm)
